@@ -4,24 +4,23 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 
 @Data
-@Table(name = "doctor")
+@Table(name = "patient")
 @RequiredArgsConstructor
 @Entity
-public class DoctorEntity {
+public class PatientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iddoctor", columnDefinition = "INT(10)")
+    @Column(name = "idpatient", columnDefinition = "INT(10)")
      Integer id;
-    @Column(name = "profession", columnDefinition = "VARCHAR(45)")
-     String profession;
-    @Column(name = "consultation", columnDefinition = "VARCHAR(45)")
-    int consultation;
+    @Column(name = "address", columnDefinition = "VARCHAR(45)")
+     String address;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "idperson")
-     PersonEntity personEntity;
+    PersonEntity personEntity;
 }

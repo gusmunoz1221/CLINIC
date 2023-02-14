@@ -23,7 +23,7 @@ public class DoctorMapper {
                 .map(entity -> new DoctorDto(
                                             entity.getProfession(),
                                             entity.getConsultation(),
-                                            personRepository.findById(entity.getId())
+                                            personRepository.findById(entity.getPersonEntity().getId())
                                             .map(personMapper::personentityToDto)
                                             .orElse(null)
                                             )
@@ -40,7 +40,7 @@ public class DoctorMapper {
         entity.setPersonEntity(personEntity);
         return entity;
     }
-    public DoctorEntity doctorDtoToEntitymodify(DoctorDto doctorDto, PersonEntity personEntity) {
+    public DoctorEntity doctorDtoToEntitymodify(DoctorDto doctorDto) {
         DoctorEntity entity = new DoctorEntity();
 
         entity.setProfession(doctorDto.getProfession());
@@ -51,19 +51,7 @@ public class DoctorMapper {
     public EntityMessageDto entityMessageDto(DoctorEntity doctorEntity){
         EntityMessageDto entityMessageDto = new EntityMessageDto();
 
-        entityMessageDto.setId(doctorEntity.getId());
-
+        entityMessageDto.setMessage("medico con ID: "+doctorEntity.getId()+" se agrego correctamente");
         return entityMessageDto;
     }
 }
-
-/*
-        Como es solo un atributo, no utilizamos el Optional
-
-    public ContactMessageDto ContactEntityToMessage(DoctorEntity contactEntity){
-        ContactMessageDto contactMessage =  new ContactMessageDto();
-
-        contactMessage.setId(contactEntity.getId());
-        return contactMessage;
-    }
-    */

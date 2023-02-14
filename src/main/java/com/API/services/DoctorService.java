@@ -12,14 +12,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;
     private final PersonRepository personRepository;
     private final PersonMapper personMapper;
-
 
     public DoctorService(DoctorRepository doctorRepository, DoctorMapper doctorMapper, PersonRepository personRepository, PersonMapper personMapper) {
         this.doctorRepository = doctorRepository;
@@ -43,6 +41,8 @@ public class DoctorService {
 
     /*-Agregamos un doctor a la base de datos*/
     public EntityMessageDto addDoctor(DoctorDto doctorDto){
+        if (doctorDto.getPerson() == null)
+            throw new BadRequestException("No se cargaron los datos de la persona...");
         if (doctorDto.getConsultation() < 0)
             throw new BadRequestException("La consulta no peude ser menor a 0");
         if (doctorDto.getProfession().equals(null))
