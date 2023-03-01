@@ -1,6 +1,5 @@
 package com.API.controllers;
 
-import com.API.Model.Dtos.EntityMessageDto;
 import com.API.Model.Dtos.TurnDto;
 import com.API.Model.Dtos.TurnDtoResponse;
 import com.API.services.TurnService;
@@ -31,5 +30,10 @@ public class TurnController {
     @GetMapping
         public ResponseEntity<List<TurnDtoResponse>> getAllTurns() {
         return ResponseEntity.ok(turnService.findAllTurns());
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<Boolean> deleteTurn(@PathVariable(name = "id") int id) {
+        return ResponseEntity.ok(turnService.deleteTurnById(id));
     }
 }
