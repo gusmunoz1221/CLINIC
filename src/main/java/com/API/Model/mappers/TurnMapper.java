@@ -49,7 +49,20 @@ public class TurnMapper{
         entity.setHour(LocalTime.parse(turnDto.getHour()));
         entity.setTreated(turnDto.getTreated());
         entity.setIdDoctor(turnDto.getIddoctor());
+        entity.setIdPatient(turnDto.getIdpatient());
+
+        return entity;
+    }
+
+    public TurnEntity turnDtoToEntityModify(TurnDto turnDto,int id){
+        TurnEntity entity = new TurnEntity();
+
+        entity.setId(id);
+        entity.setDate(LocalDate.parse(turnDto.getDate()));
+        entity.setHour(LocalTime.parse(turnDto.getHour()));
+        entity.setTreated(turnDto.getTreated());
         entity.setIdDoctor(turnDto.getIddoctor());
+        entity.setIdPatient(turnDto.getIdpatient());
 
         return entity;
     }

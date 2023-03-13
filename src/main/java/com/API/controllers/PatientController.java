@@ -1,9 +1,9 @@
 package com.API.controllers;
 
-import com.API.Model.Dtos.DoctorDto;
 import com.API.Model.Dtos.EntityMessageDto;
 import com.API.Model.Dtos.PatientDto;
 import com.API.services.PatientService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +41,28 @@ public class PatientController{
     @PutMapping("/{id}")
     public ResponseEntity<PatientDto> modofyDoctor(@RequestBody PatientDto patientDto, @PathVariable int id) {
         return ResponseEntity.ok(patientService.modifyPatient(patientDto,id));
+    }
+
+    /*PAGINACION*/
+
+    //lista todos ordenados por id --> se recibe por parametro
+    @GetMapping("/page")
+    public ResponseEntity<Page<PatientDto>> listByPage
+    (
+            @RequestParam(name = "pageNumber",defaultValue = "0") Integer pageNumber,
+            @RequestParam(name = "pageSize",defaultValue = "2") Integer pageSize,
+            @RequestParam(name = "orderFile",defaultValue = "id") String orderFiel
+    ){
+        return ResponseEntity.ok(patientService.listAllByPage(pageNumber,pageSize,orderFiel));
+    }
+
+    @GetMapping("/page/{id}")
+    public  ResponseEntity<Page<PatientDto>>listOneByPage
+            (
+                    @PathVariable int id,
+                    @RequestParam(name = "pageNumber",defaultValue = "0") Integer pageNumber,
+                    @RequestParam(name = "pageSize",defaultValue = "1") Integer pageSize
+            ){
+        return  ResponseEntity.ok(patientService.listPageById(id,pageNumber,pageSize));
     }
 }

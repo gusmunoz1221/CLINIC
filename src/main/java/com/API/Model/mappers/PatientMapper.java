@@ -1,9 +1,7 @@
 package com.API.Model.mappers;
 
-import com.API.Model.Dtos.DoctorDto;
 import com.API.Model.Dtos.EntityMessageDto;
 import com.API.Model.Dtos.PatientDto;
-import com.API.Model.Entities.DoctorEntity;
 import com.API.Model.Entities.PatientEntity;
 import com.API.Model.Entities.PersonEntity;
 import com.API.Model.repositories.PersonRepository;

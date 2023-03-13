@@ -2,15 +2,17 @@ package com.API.services;
 
 import com.API.Exceptions.BadRequestException;
 import com.API.Exceptions.NotFoundException;
-import com.API.Model.Dtos.EntityMessageDto;
-import com.API.Model.Dtos.PatientDto;
-import com.API.Model.Dtos.PersonDto;
-import com.API.Model.Entities.PatientEntity;
+import com.API.Exceptions.ValidationException;
+import com.API.Model.Dtos.*;
 import com.API.Model.Entities.PersonEntity;
 import com.API.Model.mappers.PatientMapper;
 import com.API.Model.mappers.PersonMapper;
 import com.API.Model.repositories.PatientRepository;
 import com.API.Model.repositories.PersonRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -48,9 +50,9 @@ public class PatientService {
     /*-Agregamos un paciente a la bd*/
     public EntityMessageDto addPatient(PatientDto patientDto){
         if (patientDto.getPerson() == null)
-            throw new BadRequestException("No se cargaron los datos de la persona...");
+            throw new ValidationException("No se cargaron los datos de la persona...");
         if (patientDto.getAddress().equals(null))
-            throw new BadRequestException("direccion vacia...");
+            throw new ValidationException("direccion vacia...");
 
         /*dni es unico ---> personas residentes de argentina*/
         if (!personRepository.existsByDni(patientDto.getPerson().getDni())){
@@ -101,5 +103,16 @@ public class PatientService {
                 .map(entity -> patientRepository.save(entity))
                 .map(entity -> patientMapper.patientEntityToDto(entity))
                 .orElse(new PatientDto());
+    }
+
+    /*--------------PAGINACION-------------*/
+    public Page<PatientDto> listAllByPage(Integer pageNumber, Integer pageSize, String orderFiel) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(orderFiel));
+        return patientRepository.findAll(pageable).map(patientMapper::patientEntityToDto);
+    }
+
+    public Page<PatientDto> listPageById(int id ,Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+        return patientRepository.findById(id,pageable);
     }
 }

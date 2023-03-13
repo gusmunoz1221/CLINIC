@@ -4,6 +4,7 @@ import com.API.Model.Dtos.DoctorDto;
 import com.API.Model.Dtos.EntityMessageDto;
 import com.API.services.DoctorService;
 import com.API.services.PersonService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -41,5 +42,28 @@ public class DoctorController {
     @PutMapping("/{id}")
     public ResponseEntity<DoctorDto> modofyDoctor(@RequestBody DoctorDto doctorDto, @PathVariable int id) {
         return ResponseEntity.ok(doctorService.modifyDoctor(doctorDto,id));
+    }
+
+    /*PAGINACION*/
+
+    //lista todos ordenados por id --> se recibe por parametro
+    @GetMapping("/page")
+    public ResponseEntity<Page<DoctorDto>> listByPage
+            (
+                    @RequestParam(name = "pageNumber",defaultValue = "0") Integer pageNumber,
+                    @RequestParam(name = "pageSize",defaultValue = "2") Integer pageSize,
+                    @RequestParam(name = "orderFile",defaultValue = "id") String orderFiel
+            ){
+        return ResponseEntity.ok(doctorService.listAllByPage(pageNumber,pageSize,orderFiel));
+    }
+
+    @GetMapping("/page/{id}")
+    public  ResponseEntity<Page<DoctorDto>>listOneByPage
+            (
+                    @PathVariable int id,
+                    @RequestParam(name = "pageNumber",defaultValue = "0") Integer pageNumber,
+                    @RequestParam(name = "pageSize",defaultValue = "1") Integer pageSize
+            ){
+        return  ResponseEntity.ok(doctorService.listPageById(id,pageNumber,pageSize));
     }
 }
