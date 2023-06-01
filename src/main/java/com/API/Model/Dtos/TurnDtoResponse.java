@@ -7,6 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntityMessageDto{
-    String message;
+public class TurnDtoResponse{
+    Integer id;
+    String date;
+    String hour;
+    Boolean treated;
+    PatientDto patient;
+    DoctorDto doctor;
 }
