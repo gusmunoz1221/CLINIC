@@ -2,7 +2,6 @@ package com.API.Model.Entities;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-
 import javax.persistence.*;
 
 @Data

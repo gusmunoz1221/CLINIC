@@ -1,7 +1,9 @@
 package com.API.Model.mappers;
 
+import com.API.Model.Dtos.DoctorDto;
 import com.API.Model.Dtos.EntityMessageDto;
 import com.API.Model.Dtos.PatientDto;
+import com.API.Model.Entities.DoctorEntity;
 import com.API.Model.Entities.PatientEntity;
 import com.API.Model.Entities.PersonEntity;
 import com.API.Model.repositories.PersonRepository;
@@ -38,6 +40,14 @@ public class PatientMapper {
         patient.setAddress(patientDto.getAddress());
         patient.setPersonEntity(personEntity);
 
+        return patient;
+    }
+
+    public  PatientEntity patientDtoToEntityModify(PatientDto patientDto, PersonEntity personEntity, Integer id) {
+        PatientEntity patient = new PatientEntity();
+        patient.setId(id);
+        patient.setAddress(patientDto.getAddress());
+        patient.setPersonEntity(personEntity);
         return patient;
     }
 

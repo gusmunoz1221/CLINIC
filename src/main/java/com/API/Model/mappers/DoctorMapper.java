@@ -40,11 +40,12 @@ public class DoctorMapper {
         entity.setPersonEntity(personEntity);
         return entity;
     }
-    public DoctorEntity doctorDtoToEntitymodify(DoctorDto doctorDto) {
+    public DoctorEntity doctorDtoToEntityModify(DoctorDto doctorDto,PersonEntity personEntity,Integer id) {
         DoctorEntity entity = new DoctorEntity();
-
+        entity.setId(id);
         entity.setProfession(doctorDto.getProfession());
         entity.setConsultation(doctorDto.getConsultation());
+        entity.setPersonEntity(personEntity);
         return entity;
     }
 
